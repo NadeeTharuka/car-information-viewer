@@ -88,6 +88,17 @@ def add_cars(
         min_id += 1
     return RedirectResponse(url="/cars", status_code=302)
 
+@app.get("/edit", response_class=HTMLResponse)
+def edit_car(request: Request, id: int = Query(...)):
+    car = cars.get(id)
+    response = templates.TemplateResponse("edit.html", {"request": request, "car": car, "id": id, "title": "Edit Car"})
+
+@app.get("/edit", response_class=HTMLResponse)
+def edit_car(request: Request, id: int = Query(...)):
+    car = cars.get(id)
+    if not car:
+        return templates.TemplateResponse("search.html", {"request": request, "id": id, "car": car, "title": "Edit Car"}, status_code=status.HTTP_404_NOT_FOUND)
+    return templates.TemplateResponse("edit.html", {"request": request, "id": id, "car": car, "title": "Edit Car"})
 @app.put("/cars/{id}",response_model=Dict[str,Car])
 def update_car(id: int, car: Car = Body(...)):
     stored = cars.get(id)
