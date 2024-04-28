@@ -29,7 +29,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.get("/", response_class=HTMLResponse)
 def root(request: Request):
 
-    return templates.TemplateResponse("home.html", {"request": request})
+    return templates.TemplateResponse("home.html", {"request": request, "title": "FastAPI - Home"})
 
 
 @app.get("/cars")
