@@ -113,6 +113,7 @@ def update_car(request: Request, id: int,
 def delete_car(request: Request, id: int = Path(...)):
     if not cars.get(id):
         return templates.TemplateResponse("search.html", {"request": request, "id": id, "title": "Edit Car"}, status_code=status.HTTP_404_NOT_FOUND)
+    print(id)
     del cars[id]
     return RedirectResponse(url="/cars")
 
