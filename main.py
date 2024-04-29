@@ -11,7 +11,6 @@ from database import cars
 
 templates = Jinja2Templates(directory="templates")
 
-
 class Car(BaseModel):
     make: Optional[str]
     model: Optional[str]
@@ -21,8 +20,6 @@ class Car(BaseModel):
     autonomous: Optional[bool]
     sold: Optional[List[str]]
 
-
-
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -31,7 +28,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 def root(request: Request):
 
     return RedirectResponse(url="/cars")
-
 
 @app.get("/cars", response_class=HTMLResponse)
 def get_cars(request: Request, number: Optional[str] = Query("10",max_length=3)):
@@ -44,8 +40,6 @@ def get_cars(request: Request, number: Optional[str] = Query("10",max_length=3))
 def search_cars(id: str = Query("1", max_length=3)):
     return RedirectResponse("/cars/" + id, status_code=302)
 
-
-
 @app.get("/cars/{id}", response_class=HTMLResponse)
 def get_car_by_id(request: Request, id: int = Path(...,ge=0,lt=1000)):
     car = cars.get(id)
@@ -53,7 +47,6 @@ def get_car_by_id(request: Request, id: int = Path(...,ge=0,lt=1000)):
     if not car:
         response.status_code = status.HTTP_404_NOT_FOUND
     return response
-
 
 @app.get("/create", response_class=HTMLResponse)
 def create_car(request: Request):
@@ -91,11 +84,6 @@ def add_cars(
 @app.get("/edit", response_class=HTMLResponse)
 def edit_car(request: Request, id: int = Query(...)):
     car = cars.get(id)
-    response = templates.TemplateResponse("edit.html", {"request": request, "car": car, "id": id, "title": "Edit Car"})
-
-@app.get("/edit", response_class=HTMLResponse)
-def edit_car(request: Request, id: int = Query(...)):
-    car = cars.get(id)
     if not car:
         return templates.TemplateResponse("search.html", {"request": request, "id": id, "car": car, "title": "Edit Car"}, status_code=status.HTTP_404_NOT_FOUND)
     return templates.TemplateResponse("edit.html", {"request": request, "id": id, "car": car, "title": "Edit Car"})
@@ -121,9 +109,10 @@ def update_car(request: Request, id: int,
     response[id] = cars[id]
     return RedirectResponse(url="/cars", status_code=302)
 
-@app.delete("/cars/{id}")
-def delete_car(id: int):
+@app.get("/delete/{id}", response_class=RedirectResponse)
+def delete_car(request: Request, id: int = Path(...)):
     if not cars.get(id):
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Could not find car with given ID.")
+        return templates.TemplateResponse("search.html", {"request": request, "id": id, "title": "Edit Car"}, status_code=status.HTTP_404_NOT_FOUND)
     del cars[id]
+    return RedirectResponse(url="/cars")
 
