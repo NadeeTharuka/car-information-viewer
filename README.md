@@ -21,8 +21,8 @@ This project is a FastAPI-based web application for viewing car information. It 
 - Delete cars from the database.
 
 ## Getting Started
-- Clone the repository: git clone [repository-url]
-- Install dependencies: pip install -r requirements.txt
+- Clone the repository: git clone [NadeeTharuka/car-information-viewer](https://github.com/NadeeTharuka/car-information-viewer)
+- Install dependencies: pip install -r fastapi uvicorn pydantic
 - Run the FastAPI server: uvicorn main:app --reload
 - Access the application at http://localhost:8000
 
@@ -35,4 +35,5 @@ This project is a FastAPI-based web application for viewing car information. It 
 Contributions are welcome! Feel free to open issues or submit pull requests to improve the project.
 
 ## License
-This project is licensed under the [License Name] License - see the LICENSE file for details.
+This project is licensed under the GNu GPL v3 License.  
+See the LICENSE file for details.
