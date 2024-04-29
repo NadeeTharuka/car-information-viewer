@@ -45,9 +45,9 @@
             <div class="form-check">
                 {% for ct in [("Africa", "AF"), ("ANtarctica", "AN"), ("Asia", "AS"), ("Europe","EU"), ("North America", "NA"), ("Oceania", "OC"), ("South America", "SA")]%}
                 {% if ct[1] in car['sold']%}
-                    <input class="form-check-input" type="checkbox" value="{{ct[1]}}" name="sold" checked>{{ct[0]}} ({{ct[1]}})<br>
+                    <input class="form-check-input" type="checkbox" value="{{ct[1]}}" name="sold[]" checked>{{ct[0]}} ({{ct[1]}})<br>
                 {% else %}
-                    <input class="form-check-input" type="checkbox" value="{{ct[1]}}" name="sold">{{ct[0]}} ({{ct[1]}})<br>
+                    <input class="form-check-input" type="checkbox" value="{{ct[1]}}" name="sold[]">{{ct[0]}} ({{ct[1]}})<br>
                 {% endif %}
                 {% endfor %}
             </div>
